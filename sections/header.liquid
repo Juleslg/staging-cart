@@ -332,20 +332,24 @@
 <script>
   function updateHeightObserver() {
     const mobileBreakpoint = 619; // Define the mobile breakpoint
+    const customBreakpoint = 407; // Define the custom breakpoint for 33px height
     const tabletBreakpoint = 700; // Define the tablet breakpoint
     const desktopBreakpoint = 998; // Define the desktop breakpoint
     const heightObserver = document.querySelector('height-observer');
 
     // Use settings values
     const mobileHeight = "{{ section.settings.mobile_header_height }}";
+    const customHeight = "{{ section.settings.custom_header_height }}"; // Use the custom height setting
     const tabletHeight = "{{ section.settings.tablet_header_height }}";
     const smallDesktopHeight = "{{ section.settings.small_desktop_header_height }}";
     const desktopHeight = "{{ section.settings.desktop_header_height }}";
 
     if (heightObserver) {
       // Determine and set height based on screen width
-      if (window.innerWidth <= mobileBreakpoint) {
-        heightObserver.style.height = mobileHeight; // Use dynamic value
+      if (window.innerWidth <= customBreakpoint) {
+        heightObserver.style.height = mobileHeight; // Use dynamic value for screens smaller than the custom breakpoint
+      } else if (window.innerWidth > customBreakpoint && window.innerWidth <= mobileBreakpoint) {
+        heightObserver.style.height = customHeight; // Use the custom height for screens between 407px and 619px
       } else if (window.innerWidth > mobileBreakpoint && window.innerWidth <= tabletBreakpoint) {
         heightObserver.style.height = tabletHeight; // Use dynamic value
       } else if (window.innerWidth > tabletBreakpoint && window.innerWidth <= desktopBreakpoint) {
